@@ -14,32 +14,70 @@ FileSystem::~FileSystem() {
 string FileSystem::parsePath(string wd, string path)
 {
 	string output = "";
-	istringstream sspath(path);
+	istringstream swd(wd), spath(path);
 	string field;
-	vector<string> fields;
+    vector<string> abs, rel, fields;
 
-	if (path[0] != '/')
-	{
-		path = wd + path;
+	while (getline(spath, field, '/')) {
+		abs.push_back(field);
 	}
-
-	while (getline(sspath, field, '/')) {
-		fields.push_back(field);
-	}
+    
+    while (getline(swd, field, '/')) {
+        rel.push_back(field);
+    }
+    
+    if (rel.at(0) == "")
+    {
+        fields = rel;
+    }
+    else
+    {
+        fields.reserve( abs.size() + rel.size() ); // preallocate memory
+        fields.insert( fields.end(), abs.begin(), abs.end() );
+        fields.insert( fields.end(), rel.begin(), rel.end() );
+    }
 
 	for (size_t i = 0; i < fields.size(); i++)
 	{
-		if (fields.at(i) == ".")
+        if (fields.at(i) == "")
+        {
+            //TODO REMOVE SELF FROM VECTOR
+            fields.erase(fields.begin() + i);
+            i--;
+            
+        }
+		else if (fields.at(i) == ".")
 		{
-			//fields.erase(i);
+			//TODO REMOVE SELF FROM VECTOR
+            fields.erase(fields.begin() + i);
+            i--;
 
 		}
+        else if (fields.at(i) == "..")
+        {
+            //TODO REMOVE SELF AND PREVIOUS IF NOT FIRST FROM VECTOR
+            if (i > 0)
+            {
+                fields.erase(fields.begin() + (i-1), fields.begin() + (i+1));
+                i -= 2;
+            }
+            else
+            {
+                fields.erase(fields.begin() + i);
+                i--;
+            }
+        }
 	}
 
 	for (string str : fields)
 	{
-		output += " / " + str;
+		output += "/" + str;
 	}
+    
+    if (output == "")
+    {
+        output = "/";
+    }
 
 	return output;
 }

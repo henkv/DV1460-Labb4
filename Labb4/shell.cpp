@@ -80,7 +80,7 @@ int main(void) {
             case 12: // cd
 				if (nrOfCommands > 1)
 				{
-					std::cout << fs.parsePath(currentDir, commandArr[1]) << std::endl;
+					currentDir = fs.parsePath(currentDir, commandArr[1]);
 				}
                 break;
             case 13: // pwd

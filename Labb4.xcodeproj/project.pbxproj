@@ -32,9 +32,6 @@
 		C436035C1DC3957400D4D877 /* Labb4 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Labb4; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43603661DC3961500D4D877 /* block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = block.cpp; sourceTree = "<group>"; };
 		C43603671DC3961500D4D877 /* block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = block.h; sourceTree = "<group>"; };
-		C43603681DC3961500D4D877 /* block.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = block.txt; sourceTree = "<group>"; };
-		C43603691DC3961500D4D877 /* block2.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = block2.bin; sourceTree = "<group>"; };
-		C436036A1DC3961500D4D877 /* block2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = block2.txt; sourceTree = "<group>"; };
 		C436036B1DC3961500D4D877 /* blockdevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blockdevice.cpp; sourceTree = "<group>"; };
 		C436036C1DC3961500D4D877 /* blockdevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blockdevice.h; sourceTree = "<group>"; };
 		C436036D1DC3961500D4D877 /* duallinklist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = duallinklist.h; sourceTree = "<group>"; };
@@ -42,8 +39,6 @@
 		C436036F1DC3961500D4D877 /* filesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filesystem.h; sourceTree = "<group>"; };
 		C43603701DC3961500D4D877 /* folder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = folder.cpp; sourceTree = "<group>"; };
 		C43603711DC3961500D4D877 /* folder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = folder.h; sourceTree = "<group>"; };
-		C43603721DC3961500D4D877 /* Labb4.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Labb4.vcxproj; sourceTree = "<group>"; };
-		C43603731DC3961500D4D877 /* Labb4.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Labb4.vcxproj.filters; sourceTree = "<group>"; };
 		C43603741DC3961500D4D877 /* memblockdevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memblockdevice.cpp; sourceTree = "<group>"; };
 		C43603751DC3961500D4D877 /* memblockdevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memblockdevice.h; sourceTree = "<group>"; };
 		C43603761DC3961500D4D877 /* node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node.cpp; sourceTree = "<group>"; };
@@ -83,9 +78,6 @@
 			children = (
 				C43603661DC3961500D4D877 /* block.cpp */,
 				C43603671DC3961500D4D877 /* block.h */,
-				C43603681DC3961500D4D877 /* block.txt */,
-				C43603691DC3961500D4D877 /* block2.bin */,
-				C436036A1DC3961500D4D877 /* block2.txt */,
 				C436036B1DC3961500D4D877 /* blockdevice.cpp */,
 				C436036C1DC3961500D4D877 /* blockdevice.h */,
 				C436036D1DC3961500D4D877 /* duallinklist.h */,
@@ -93,8 +85,6 @@
 				C436036F1DC3961500D4D877 /* filesystem.h */,
 				C43603701DC3961500D4D877 /* folder.cpp */,
 				C43603711DC3961500D4D877 /* folder.h */,
-				C43603721DC3961500D4D877 /* Labb4.vcxproj */,
-				C43603731DC3961500D4D877 /* Labb4.vcxproj.filters */,
 				C43603741DC3961500D4D877 /* memblockdevice.cpp */,
 				C43603751DC3961500D4D877 /* memblockdevice.h */,
 				C43603761DC3961500D4D877 /* node.cpp */,
