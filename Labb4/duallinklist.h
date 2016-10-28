@@ -42,7 +42,7 @@ public:
 
 	void add(T const& element)
 	{
-
+        this->root = new Node(element);
 	}
 };
 
