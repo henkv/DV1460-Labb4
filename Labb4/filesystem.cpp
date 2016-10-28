@@ -31,7 +31,7 @@ string FileSystem::parsePath(string wd, string path)
 	{
 		if (fields.at(i) == ".")
 		{
-			fields.erase(i);
+			//fields.erase(i);
 
 		}
 	}
@@ -103,7 +103,7 @@ bool FileSystem::saveToFile(string filename)
 
 	file.open(filename);
 
-	for (size_t i = 0, s = mMemblockDevice.size(); i < s; i++)
+	for (int i = 0, s = mMemblockDevice.size(); i < s; i++)
 	{
 		file << mMemblockDevice.readBlock(i).toString() << endl;
 	}
@@ -123,7 +123,7 @@ bool FileSystem::loadFromFile(string filename)
 	this->format();
 	file.open(filename);
 
-	for (size_t i = 0; getline(file, block); i++)
+	for (int i = 0; getline(file, block); i++)
 	{
 		mMemblockDevice.writeBlock(i, block);
 	}
