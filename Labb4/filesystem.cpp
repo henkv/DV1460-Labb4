@@ -1,83 +1,63 @@
 #include "filesystem.h"
+
 #include <sstream>
 #include <vector>
 #include <fstream>
+#include "duallinklist.h"
 
-FileSystem::FileSystem() {
+FileSystem::FileSystem()
+{
   this->root = new Folder("");
 }
 
-FileSystem::~FileSystem() {
+FileSystem::~FileSystem() 
+{
   delete root;
 }
 
-string FileSystem::parsePath(string wd, string path)
+string FileSystem::parsePath(string absolute, string relative)
 {
 	string output = "";
-	istringstream swd(wd), spath(path);
+	istringstream path;
+	vector<string> list;
 	string field;
-    vector<string> abs, rel, fields;
+	
 
-	while (getline(spath, field, '/')) {
-		abs.push_back(field);
+	if (relative.find('/') == 0) {
+		path.str(relative);
 	}
-    
-    while (getline(swd, field, '/')) {
-        rel.push_back(field);
-    }
-    
-    if (rel.at(0) == "")
-    {
-        fields = rel;
-    }
-    else
-    {
-        fields.reserve( abs.size() + rel.size() ); // preallocate memory
-        fields.insert( fields.end(), abs.begin(), abs.end() );
-        fields.insert( fields.end(), rel.begin(), rel.end() );
-    }
+	else {
+		path.str(absolute + '/' + relative);
+	}
 
-	for (size_t i = 0; i < fields.size(); i++)
+	while (getline(path, field, '/')) {
+		list.push_back(field);
+	}
+
+	for (int i = 0; i < list.size(); i++)
 	{
-        if (fields.at(i) == "")
-        {
-            //TODO REMOVE SELF FROM VECTOR
-            fields.erase(fields.begin() + i);
-            i--;
-            
-        }
-		else if (fields.at(i) == ".")
+		if (list.at(i) == "" || list.at(i) == ".")
 		{
-			//TODO REMOVE SELF FROM VECTOR
-            fields.erase(fields.begin() + i);
-            i--;
-
+			list.erase(list.begin() + i--);
 		}
-        else if (fields.at(i) == "..")
-        {
-            //TODO REMOVE SELF AND PREVIOUS IF NOT FIRST FROM VECTOR
-            if (i > 0)
-            {
-                fields.erase(fields.begin() + (i-1), fields.begin() + (i+1));
-                i -= 2;
-            }
-            else
-            {
-                fields.erase(fields.begin() + i);
-                i--;
-            }
-        }
+		else if (list.at(i) == "..")
+		{
+			if (i > 0) {
+				list.erase(list.begin() + i--);
+			}
+			list.erase(list.begin() + i--);
+		}
 	}
 
-	for (string str : fields)
+	for (string str : list)
 	{
 		output += "/" + str;
 	}
-    
-    if (output == "")
-    {
-        output = "/";
-    }
+
+	if (output == "")
+	{
+		output = "/";
+	}
 
 	return output;
 }
