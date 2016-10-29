@@ -7,12 +7,12 @@
 
 FileSystem::FileSystem()
 {
-  this->root = new Folder("");
+	this->root = new Folder("");
 }
 
-FileSystem::~FileSystem() 
+FileSystem::~FileSystem()
 {
-  delete root;
+	delete root;
 }
 
 string FileSystem::parsePath(string absolute, string relative)
@@ -21,7 +21,7 @@ string FileSystem::parsePath(string absolute, string relative)
 	istringstream path;
 	vector<string> list;
 	string field;
-	
+
 
 	if (relative.find('/') == 0) {
 		path.str(relative);
@@ -42,19 +42,22 @@ string FileSystem::parsePath(string absolute, string relative)
 		}
 		else if (list.at(i) == "..")
 		{
-			if (i > 0) {
+			if (i > 0)
+			{
 				list.erase(list.begin() + i--);
 			}
 			list.erase(list.begin() + i--);
 		}
 	}
 
-	for (string str : list)
+	if (list.size() > 0)
 	{
-		output += "/" + str;
+		for (string str : list)
+		{
+			output += "/" + str;
+		}
 	}
-
-	if (output == "")
+	else
 	{
 		output = "/";
 	}
@@ -63,51 +66,52 @@ string FileSystem::parsePath(string absolute, string relative)
 }
 
 Node* FileSystem::resolvePath(string path) {
-  Node* output = nullptr;
-  Node* child = root;
+	Node* output = nullptr;
+	Node* child = root;
 
-  istringstream sspath(path);
-  string field;
-  getline(sspath, field, '/');
+	istringstream sspath(path);
+	string field;
+	getline(sspath, field, '/');
 
-  while (child != nullptr && getline(sspath, field, '/')) {
-    child = dynamic_cast<Folder*>(child)->getChild(field);
-  }
+	while (child != nullptr && getline(sspath, field, '/')) {
+		child = dynamic_cast<Folder*>(child)->getChild(field);
+	}
 
-  output = child;
+	output = child;
 
-  return output;
+	return output;
 }
 
-bool FileSystem::createFolder(string path, string name){
-  bool output = false;
+bool FileSystem::createFolder(string path, string name) {
+	bool output = false;
 
-  Folder* dir = dynamic_cast<Folder*>(resolvePath(path));
+	Folder* dir = dynamic_cast<Folder*>(resolvePath(path));
 
-  if (dir != nullptr) {    
-    output = dir->addChild(new Folder(name));
-  }
+	if (dir != nullptr) {
+		output = dir->addChild(new Folder(name));
+	}
 
-  return output;
+	return output;
 }
 
 string FileSystem::listDir(string path) {
-  string output = "";
+	string output = "";
 
-  Folder* dir = dynamic_cast<Folder*>(this->resolvePath(path));
+	Folder* dir = dynamic_cast<Folder*>(this->resolvePath(path));
 
-  if (dir != nullptr) {
-    for (Node* child : dir->getChildren()) {
-      output += " " + child->getName();
-    }
-  } else {
-    output = "Could not find directory.";
-  }
+	if (dir != nullptr) {
+		for (Node* child : dir->getChildren()) {
+			output += " " + child->getName();
+		}
+	}
+	else {
+		output = "Could not find directory.";
+	}
 
-  return output + '\n';
+	return output + '\n';
 }
 
-void FileSystem::format() 
+void FileSystem::format()
 {
 	mMemblockDevice.reset();
 	delete root;
