@@ -81,35 +81,100 @@ public:
         }
         this->nrOfNodes++;
 	}
+
+	T removeFirst()
+	{
+		if (nrOfNodes == 0) throw new Exception("list empty");
+
+		Node* oldRoot = this->root;
+		T output = oldRoot->data;
+
+		if (this->nrOfNodes == 1)
+		{
+			this->root = nullptr;
+		}
+		else
+		{
+			this->root = oldRoot->next;
+		}
+
+		this->deleteNode(oldRoot);
+		this->nrOfNodes--;
+
+		return data;
+	}
+
+	T removeLast()
+	{
+		if (nrOfNodes == 0) throw new Exception("list empty");
+
+		Node* oldLast = this->root->prev;
+		T output = oldLast->data;
+
+		if (this->nrOfNodes == 1)
+		{
+			this->root = nullptr;
+		}
+
+		this->deleteNode(oldLast);
+		this->nrOfNodes--;
+
+		return data;
+	}
     
-    void removeAt(size_t index)
+    T removeAt(size_t index)
     {
+		T output;
+
         if (index >= this->nrOfNodes)
         {
             throw new Exception("Index out of range");
         }
         
-        Node* walker = this->root;
         
         if (index == 0)
         {
-            this->root = walker->next;
+			output = this->removeFirst();
         }
+		else if (index == this->nrOfNodes - 1)
+		{
+			output = this->removeLast();
+		}
         else
         {
+			Node* walker = this->root;
             for (size_t i = 0; i < index; i++) {
                 walker = walker->next;
             }
-        }
+
+			output = walker->data;
+
+			if (this->nrOfNodes == 1)
+			{
+				this->root = nullptr;
+			}
+
+			this->deleteNode(walker);
+			this->nrOfNodes--;			
+        }   
         
-        this->deleteNode(walker);
-        this->nrOfNodes--;
-        
-        if (this->nrOfNodes == 0)
-        {
-            this->root = nullptr;
-        }
+		return output;
     }
+
+	void push(T const& data)
+	{
+		this->addFirst(data);
+	}
+
+	void queue(T const& data)
+	{
+		this->addLast(data);
+	}
+
+	T pop()
+	{
+		return removeFirst();
+	}
 };
 
 #endif // !DUALLINKLIST_H

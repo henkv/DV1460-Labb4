@@ -6,6 +6,7 @@
 #include "memblockdevice.h"
 #include "node.h"
 #include "folder.h"
+#include "duallinklist.h"
 
 using namespace std;
 
@@ -14,12 +15,17 @@ private:
     MemBlockDevice mMemblockDevice;
     // Here you can add your own data structures
     Folder* root;
-	Node* resolvePath(string path);
+	string currentPath;
+	DualLinkList<int> freeBlocks;
+
+	int getEmptyBlock();
+	void freeBlock(int index);
 
 public:
     FileSystem();
     ~FileSystem();
-	string parsePath(string wd, string path);
+	string parsePath(string absolute, string relative);
+	Node* resolvePath(string path);
 
 
     /* These commands needs to implemented
@@ -28,10 +34,10 @@ public:
      */
 
     /* This function creates a file in the filesystem */
-    // createFile(...)
+	int createFile(string path, string content);
 
     /* Creates a folder in the filesystem */
-    bool createFolder(string path, string name);
+	int createFolder(string path);
 
     /* Removes a file in the filesystem */
     // removeFile(...);
@@ -40,9 +46,9 @@ public:
     // removeFolder(...);
 
     /* Function will move the current location to a specified location in the filesystem */
-    // goToFolder(...);
+	bool goToFolder(string path, string & newPath);
 
-    /* This function will get all the files and folders in the specified folder */
+	/* This function will get all the files and folders in the specified folder */
     string listDir(string path);
 
     /* Add your own member-functions if needed */

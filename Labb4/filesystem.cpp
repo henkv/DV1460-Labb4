@@ -3,11 +3,18 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
-#include "duallinklist.h"
+#include "file.h"
 
 FileSystem::FileSystem()
 {
+	this->currentPath = "/";
 	this->root = new Folder("");
+
+	int size = this->mMemblockDevice.size();
+	for (int i = size - 1; i > 1; i--)
+	{
+		this->freeBlocks.push(i);
+	}
 }
 
 FileSystem::~FileSystem()
@@ -82,13 +89,78 @@ Node* FileSystem::resolvePath(string path) {
 	return output;
 }
 
-bool FileSystem::createFolder(string path, string name) {
+int FileSystem::createFile(string path, string content)
+{
+	int output = 0; // -1 parent folder doesnt exist, -2 name already in use, -3 name too long, -4 content to big
+
+	string absPath = this->parsePath(this->currentPath, path);
+	int lastSlash = absPath.find_last_of('/');
+	string parentPath = absPath.substr(0, lastSlash);
+	string name = path.substr(lastSlash + 1);
+
+	Folder* dir = dynamic_cast<Folder*>(this->resolvePath(parentPath));
+
+	if (dir == nullptr) {
+		output = -1;
+	}
+	else {
+		for (Node* n : dir->getChildren()) {
+			if (name == n->getName()) {
+				output = -2;
+				break;
+			}
+		}
+
+		if (output == 0) {
+			dir->addChild(new File(name, content));
+		}
+	}
+
+	return output;
+}
+
+int FileSystem::createFolder(string path) {
+	int output = 0; // -1 parent folder doesnt exist, -2 name already in use, -3 name too long
+
+	string absPath = this->parsePath(this->currentPath, path);
+	int lastSlash = absPath.find_last_of('/');
+	string parentPath = absPath.substr(0, lastSlash);
+	string name = path.substr(lastSlash + 1);
+
+	Folder* dir = dynamic_cast<Folder*>(this->resolvePath(parentPath));
+
+	if (dir == nullptr) 
+	{
+		output = -1;
+	}
+	else 
+	{
+		for (Node* n : dir->getChildren()) {
+			if (name == n->getName()) {
+				output = -2;
+				break;
+			}
+		}
+
+		if (output == 0) {
+			dir->addChild(new Folder(name));
+		}
+	}
+
+	return output;
+}
+
+
+bool FileSystem::goToFolder(string path, string & newPath)
+{
 	bool output = false;
+	newPath = this->parsePath(this->currentPath, path);
+	Folder* target = dynamic_cast<Folder*>(this->resolvePath(newPath));
 
-	Folder* dir = dynamic_cast<Folder*>(resolvePath(path));
-
-	if (dir != nullptr) {
-		output = dir->addChild(new Folder(name));
+	if (target != nullptr)
+	{
+		this->currentPath = newPath;
+		output = true;
 	}
 
 	return output;
@@ -97,7 +169,9 @@ bool FileSystem::createFolder(string path, string name) {
 string FileSystem::listDir(string path) {
 	string output = "";
 
-	Folder* dir = dynamic_cast<Folder*>(this->resolvePath(path));
+	string absPath = this->parsePath(this->currentPath, path);
+	Node* target = this->resolvePath(absPath);
+	Folder* dir = dynamic_cast<Folder*>(target);
 
 	if (dir != nullptr) {
 		for (Node* child : dir->getChildren()) {

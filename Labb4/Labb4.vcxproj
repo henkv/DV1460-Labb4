@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="block.cpp" />
     <ClCompile Include="blockdevice.cpp" />
+    <ClCompile Include="file.cpp" />
     <ClCompile Include="filesystem.cpp" />
     <ClCompile Include="folder.cpp" />
     <ClCompile Include="memblockdevice.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="block.h" />
     <ClInclude Include="blockdevice.h" />
     <ClInclude Include="duallinklist.h" />
+    <ClInclude Include="file.h" />
     <ClInclude Include="filesystem.h" />
     <ClInclude Include="folder.h" />
     <ClInclude Include="memblockdevice.h" />
